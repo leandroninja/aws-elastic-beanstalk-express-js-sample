@@ -1,17 +1,38 @@
 {
   "name": "aws-elastic-beanstalk-express-js-sample",
-  "version": "1.0.0",
-  "description": "Sample Node.js (Express) app for AWS Elastic Beanstalk",
-  "main": "app.js",
+  "version": "2.0.0",
+  "description": "Sample Node.js (Express) app for AWS Elastic Beanstalk — modernized",
+  "main": "src/server.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "test": "jest --forceExit",
+    "test:coverage": "jest --coverage --forceExit",
+    "lint": "eslint src tests",
+    "lint:fix": "eslint src tests --fix"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/aws-samples/aws-elastic-beanstalk-express-js-sample.git"
+    "url": "git+https://github.com/leandroninja/aws-elastic-beanstalk-express-js-sample.git"
   },
   "license": "MIT-0",
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
   "dependencies": {
-    "express": "^4.17.1"
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.2",
+    "express-rate-limit": "^7.5.0",
+    "express-validator": "^7.2.1",
+    "helmet": "^8.0.0",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "eslint": "^9.20.0",
+    "jest": "^29.7.0",
+    "nodemon": "^3.1.9",
+    "supertest": "^7.0.0"
   }
 }

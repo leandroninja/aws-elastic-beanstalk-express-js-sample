@@ -1,8 +1,6 @@
-const express = require('express');
-const app = express();
-const port = 8080;
+'use strict';
 
-app.get('/', (req, res) => res.send('GOD job Ninja!'));
-
-app.listen(port);
-console.log(`App running on http://localhost:${port}`);
+// Entry point kept for AWS Elastic Beanstalk compatibility.
+// The application logic now lives in src/.
+require('dotenv').config();
+require('./src/server');
