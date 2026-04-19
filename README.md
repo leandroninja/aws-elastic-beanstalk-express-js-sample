@@ -1,44 +1,44 @@
-# AWS Elastic Beanstalk Express.js Sample App
+# AWS Elastic Beanstalk — App Express.js
 
-A modernized Node.js web application built with [Express](https://expressjs.com/), designed for deployment on AWS Elastic Beanstalk. Includes security headers, rate limiting, input validation, structured error handling, health check, and a full test suite.
+Aplicação web Node.js modernizada com [Express](https://expressjs.com/), pronta para deploy no AWS Elastic Beanstalk. Inclui headers de segurança, rate limiting, validação de entrada, tratamento de erros centralizado, health check e suite de testes completa.
 
-## Requirements
+## Requisitos
 
-- Node.js >= 18 (20 LTS recommended — see `.nvmrc`)
+- Node.js >= 18 (20 LTS recomendado — veja `.nvmrc`)
 - npm >= 9
 
-## Getting Started
+## Primeiros passos
 
 ```bash
-# 1. Install dependencies
+# 1. Instalar dependências
 npm install
 
-# 2. Create your .env from the example
+# 2. Criar o .env a partir do exemplo
 cp .env.example .env
 
-# 3. Start the dev server (auto-restart on changes)
+# 3. Iniciar o servidor em modo desenvolvimento (reinicia automaticamente)
 npm run dev
 
-# 4. Or start in production mode
+# 4. Ou iniciar em modo produção
 npm start
 ```
 
-The server listens on `http://localhost:8080` by default.
+O servidor sobe em `http://localhost:8080` por padrão.
 
-## Environment Variables
+## Variáveis de ambiente
 
-| Variable   | Default       | Description               |
-|------------|---------------|---------------------------|
-| `NODE_ENV` | `development` | Runtime environment       |
-| `PORT`     | `8080`        | Port the server listens on |
-| `HOST`     | `0.0.0.0`    | Bind address              |
+| Variável   | Padrão        | Descrição                        |
+|------------|---------------|----------------------------------|
+| `NODE_ENV` | `development` | Ambiente de execução             |
+| `PORT`     | `8080`        | Porta que o servidor vai escutar |
+| `HOST`     | `0.0.0.0`    | Endereço de bind                 |
 
-Copy `.env.example` to `.env` and adjust as needed.
+Copie `.env.example` para `.env` e ajuste conforme necessário.
 
-## API Endpoints
+## Endpoints da API
 
 ### `GET /`
-Returns a welcome JSON payload.
+Retorna um payload JSON de boas-vindas.
 
 ```json
 {
@@ -49,7 +49,7 @@ Returns a welcome JSON payload.
 ```
 
 ### `GET /health`
-Health check endpoint used by load balancers and monitoring tools.
+Endpoint de health check usado por load balancers e ferramentas de monitoramento.
 
 ```json
 {
@@ -60,81 +60,81 @@ Health check endpoint used by load balancers and monitoring tools.
 ```
 
 ### `POST /echo`
-Echoes back the provided message. Useful for testing request flow.
+Retorna a mensagem enviada. Útil para testar o fluxo de requisições.
 
 **Body** (JSON):
 ```json
-{ "message": "hello world" }
+{ "message": "olá mundo" }
 ```
 
-**Response:**
+**Resposta:**
 ```json
-{ "echo": "hello world" }
+{ "echo": "olá mundo" }
 ```
 
-Validation: `message` is required and must be 500 characters or fewer.
+Validação: `message` é obrigatório e deve ter no máximo 500 caracteres.
 
 ## Scripts
 
-| Script             | Description                        |
-|--------------------|------------------------------------|
-| `npm start`        | Start server (production)          |
-| `npm run dev`      | Start server with nodemon (watch)  |
-| `npm test`         | Run test suite (Jest)              |
-| `npm run test:coverage` | Run tests with coverage report |
-| `npm run lint`     | Lint source files (ESLint)         |
-| `npm run lint:fix` | Lint and auto-fix                  |
+| Script                   | Descrição                              |
+|--------------------------|----------------------------------------|
+| `npm start`              | Inicia o servidor (produção)           |
+| `npm run dev`            | Inicia com nodemon (modo watch)        |
+| `npm test`               | Executa os testes (Jest)               |
+| `npm run test:coverage`  | Testes com relatório de cobertura      |
+| `npm run lint`           | Verifica o código com ESLint           |
+| `npm run lint:fix`       | Corrige problemas de lint automaticamente |
 
-## Project Structure
+## Estrutura do projeto
 
 ```
 .
 ├── src/
-│   ├── app.js              # Express app factory
-│   ├── server.js           # HTTP server + graceful shutdown
+│   ├── app.js              # Factory do app Express
+│   ├── server.js           # Servidor HTTP + graceful shutdown
 │   ├── routes/
-│   │   ├── index.js        # Main routes (GET /, POST /echo)
-│   │   └── health.js       # Health check route
+│   │   ├── index.js        # Rotas principais (GET /, POST /echo)
+│   │   └── health.js       # Rota de health check
 │   └── middleware/
-│       ├── errorHandler.js # Global error handler
-│       └── notFound.js     # 404 handler
+│       ├── errorHandler.js # Tratamento global de erros
+│       └── notFound.js     # Handler 404
 ├── tests/
-│   └── app.test.js         # Integration tests (Jest + supertest)
-├── .env.example            # Environment variable template
-├── .nvmrc                  # Node version (20 LTS)
-├── eslint.config.js        # ESLint flat config
-├── jest.config.js          # Jest configuration
-├── nodemon.json            # Nodemon configuration
-└── app.js                  # AWS EB entry point (delegates to src/)
+│   └── app.test.js         # Testes de integração (Jest + supertest)
+├── .env.example            # Modelo de variáveis de ambiente
+├── .nvmrc                  # Versão do Node (20 LTS)
+├── eslint.config.js        # Configuração ESLint flat config
+├── jest.config.js          # Configuração do Jest
+├── nodemon.json            # Configuração do Nodemon
+└── app.js                  # Entry point do AWS EB (delega para src/)
 ```
 
-## Features
+## Funcionalidades
 
-- **Security** — [Helmet](https://helmetjs.github.io/) HTTP security headers
-- **Rate limiting** — 100 requests per 15 minutes per IP
-- **Input validation** — [express-validator](https://express-validator.github.io/) on POST endpoints
-- **Error handling** — Centralized error middleware with stack traces in dev
-- **Logging** — [Morgan](https://github.com/expressjs/morgan) HTTP request logger
-- **CORS** — Cross-origin resource sharing support
-- **Graceful shutdown** — Handles `SIGTERM`/`SIGINT` for clean restarts
-- **Health check** — `/health` endpoint for ALB / Beanstalk health checks
-- **Env config** — [dotenv](https://github.com/motdotla/dotenv) support
+- **Segurança** — Headers HTTP com [Helmet](https://helmetjs.github.io/)
+- **Rate limiting** — 100 requisições por 15 minutos por IP
+- **Validação de entrada** — [express-validator](https://express-validator.github.io/) nos endpoints POST
+- **Tratamento de erros** — Middleware centralizado com stack trace em desenvolvimento
+- **Logging** — Logger HTTP [Morgan](https://github.com/expressjs/morgan)
+- **CORS** — Suporte a requisições cross-origin
+- **Graceful shutdown** — Trata `SIGTERM`/`SIGINT` para reinicializações limpas
+- **Health check** — Endpoint `/health` para ALB e Beanstalk
+- **Configuração por env** — Suporte a [dotenv](https://github.com/motdotla/dotenv)
 
-## Deploying to AWS Elastic Beanstalk
+## Deploy no AWS Elastic Beanstalk
 
-AWS EB will automatically run `npm start`, which calls `node src/server.js`. The app binds to `0.0.0.0:8080` by default, which is the port EB proxies to.
+O AWS EB executa automaticamente `npm start`, que chama `node src/server.js`. A aplicação sobe em `0.0.0.0:8080` por padrão, que é a porta que o EB usa como proxy.
 
 ```bash
-# Using the EB CLI
+# Usando o EB CLI
 eb init
-eb create my-env
+eb create meu-ambiente
 eb deploy
 ```
 
-## Security
+## Segurança
 
-See [CONTRIBUTING](CONTRIBUTING.md#security-issue-notifications) for security issue notifications.
+Consulte [CONTRIBUTING](CONTRIBUTING.md#security-issue-notifications) para notificação de problemas de segurança.
 
-## License
+## Licença
 
-This project is licensed under the MIT-0 License. See the [LICENSE](LICENSE) file.
+Este projeto está licenciado sob a licença MIT-0. Veja o arquivo [LICENSE](LICENSE).
